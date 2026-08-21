@@ -1,0 +1,19 @@
+Open a terminal and run:
+
+sudo nano /etc/udev/rules.d/99-gpd-win5-ax210-aspm.rules
+
+Past in the following
+
+# Disable ASPM for Intel AX210 on GPD Win5
+SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0x2725", DRIVER=="iwlwifi", PROGRAM=="/usr/bin/sh -c 'test $(cat /sys/class/dmi/id/product_name) = G1618-05'", RUN+="/usr/bin/setpci -s $kernel CAP_EXP+10.w=0x0040"
+
+Save and exit:
+
+Ctrl+O, Enter
+Ctrl+X
+
+Reload udev fules
+
+sudo udevadm control --reload-rules
+
+Reboot
